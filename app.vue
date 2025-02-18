@@ -12,4 +12,8 @@
 
 .section 
   min-height: 90vh
+
+@include mobile
+  .section
+    min-height: 70vh
 </style>

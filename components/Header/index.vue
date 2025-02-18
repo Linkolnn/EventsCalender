@@ -29,4 +29,8 @@ const isAuth = computed(() => !!currentUser.value);
 .header__logo-link
     color:$black
 
+@include mobile
+  .header
+    flex-direction: column
+
 </style>

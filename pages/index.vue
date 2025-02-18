@@ -46,7 +46,7 @@ onMounted(() => {
     flex-direction: column
     align-items: center
     justify-content: center
-    gap: 50px
+    gap: 40px
 
 .welcome__title 
     text-align: center
@@ -64,5 +64,9 @@ onMounted(() => {
 
 .welcome__btn
     font-size: 24px 
+
+@include mobile
+  .welcome__text
+    display: none
 
 </style>

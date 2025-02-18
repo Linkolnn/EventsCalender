@@ -1318,6 +1318,13 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.5.13.tgz#87b309a6379c22b926e696893237826f64339b6f"
   integrity sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==
 
+"@vuepic/vue-datepicker@^11.0.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/@vuepic/vue-datepicker/-/vue-datepicker-11.0.1.tgz#c5793d8728f0906417ef06a2f04b7cf5019d83a0"
+  integrity sha512-xtGbgZAftBiU1H8pwM54vOCutLzEHsHiolRuDn+memTjqpfzT0x1Ml1tykJ53PLvdkCTyb6sB+1muv5Gsd4nQA==
+  dependencies:
+    date-fns "^4.1.0"
+
 abbrev@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-3.0.0.tgz#c29a6337e167ac61a84b41b80461b29c5c271a27"
@@ -1937,6 +1944,11 @@ csstype@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.3.tgz#d80ff294d114fb0e6ac500fbf85b60137d7eff81"
   integrity sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==
+
+date-fns@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-4.1.0.tgz#64b3d83fff5aa80438f5b1a633c2e83b8a1c2d14"
+  integrity sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==
 
 db0@^0.2.1:
   version "0.2.4"
@@ -4981,6 +4993,11 @@ vue-bundle-renderer@^2.1.1:
   integrity sha512-+qALLI5cQncuetYOXp4yScwYvqh8c6SMXee3B+M7oTZxOgtESP0l4j/fXdEJoZ+EdMxkGWIj+aSEyjXkOdmd7g==
   dependencies:
     ufo "^1.5.4"
+
+vue-cal@^4.10.2:
+  version "4.10.2"
+  resolved "https://registry.yarnpkg.com/vue-cal/-/vue-cal-4.10.2.tgz#7539b5673f1f0e3e4baafa0e68fdb220cbe041b3"
+  integrity sha512-VHaoqI2DLGlwo4BGoUKF97PqKdxGFHCilj2co40zraQXucolALDaYNdpSfdP1kO3f+uznuqbEFH3n/SF5fHPpQ==
 
 vue-devtools-stub@^0.1.0:
   version "0.1.0"

@@ -77,4 +77,8 @@ onMounted(() => {
     gap: 20px
     width: 700px
 
+@include mobile
+  .form
+    width: 350px
+
 </style>

@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js';
 export function useAuth() {
   const users = useCookie('auth_users', { // Отдельная кука для хранения всех аккаунтов
     default: () => ({}),
-    secure: true,
+    // secure: true,
     sameSite: 'strict',
     path: '/',
     maxAge: 172800 // 2 дней
@@ -11,7 +11,7 @@ export function useAuth() {
 
   const currentUser = useCookie('current_user', { // Кука для текущей сессии
     default: () => null,
-    secure: true,
+    // secure: true,
     sameSite: 'strict',
     path: '/',
     maxAge: 172800 // 2 дня
