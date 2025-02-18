@@ -15,7 +15,8 @@
         <p>{{ formatDate(selectedEvent.start) }}</p>
         <p>{{ formatDate(selectedEvent.end) }}</p>
         <button class="btn font-button" type="submit">Изменить</button>
-        <button class="btn font-button" @click="selectedEvent = null">Отмена</button>
+        <button class="btn font-button" type="button" @click="selectedEvent = null">Отмена</button>
+        <button class="btn font-button" type="button" @click="deleteEvent">Удалить</button>
       </form>
     </aside>
 
@@ -48,28 +49,25 @@ import { useEvents } from '@/composables/useEvents';
 
 const { currentUser } = useAuth();
 const { getUserEvents, saveUserEvents } = useEvents();
-
-const events = ref([]); // Инициализируем пустым массивом
+const events = ref([]);
 const isCreating = ref(false);
 const isEditing = ref(false);
 const selectedEvent = ref(null);
-const newEvent = ref({ title: '', description: '', date: [] });
-// Ждем, пока currentUser загрузится, и получаем события
-watch(currentUser, (user) => {
-  if (user) {
-    events.value = getUserEvents(user.name);
-  }
-}, { immediate: true });
+const newEvent = ref({ 
+  id: null,
+  title: '', 
+  description: '', 
+  date: [] 
+});
 
-const startCreating = () => {
-  isCreating.value = true;
-  isEditing.value = false;
-  newEvent.value = { title: '', description: '', date: [] };
+const generateId = () => {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
 };
 
 const formatDate = (date) => {
   if (!date || !(date instanceof Date) || isNaN(date)) return "Дата не указана";
-  
   return date.toLocaleDateString('ru-RU', {
     day: 'numeric',
     month: 'long',
@@ -79,54 +77,83 @@ const formatDate = (date) => {
   });
 };
 
-const createEvent = () => {
+const startCreating = () => {
+  isCreating.value = true;
+  isEditing.value = false;
+  newEvent.value = { title: '', description: '', date: [] };
+};
+
+watch(currentUser,  (user) => {
+  if (user) {
+    events.value = getUserEvents(user.name)
+  }
+}, { immediate: true })
+
+const createEvent =  () => {
   if (newEvent.value.title && newEvent.value.date?.length === 2) {
     const eventData = {
+      id: isEditing.value ? newEvent.value.id : generateId(),
       title: newEvent.value.title,
       description: newEvent.value.description,
       start: new Date(newEvent.value.date[0]),
       end: new Date(newEvent.value.date[1])
     };
 
-    if (isEditing.value) {
-      const index = events.value.findIndex(e => e === selectedEvent.value);
-      if (index > -1) events.value[index] = eventData;
-    } else {
-      events.value.push(eventData);
-    }
+    // Обновляем массив событий
+    const updatedEvents = isEditing.value
+      ? events.value.map(e => e.id === eventData.id ? eventData : e)
+      : [...events.value, eventData];
 
-    saveUserEvents(currentUser.value.name, events.value);
-
-    isCreating.value = false;
-    isEditing.value = false;
-    selectedEvent.value = null;
-    newEvent.value = { title: '', description: '', date: [] };
+    saveUserEvents(currentUser.value.name, updatedEvents);
+    events.value = updatedEvents;
+    resetForm();
   }
 };
 
 const showEventDetails = (event) => {
-  if (!event?.start || !event?.end) return;
-  console.log("Структура события:", event);
   selectedEvent.value = event;
-  isCreating.value = false; // Добавьте эту строку
+  isCreating.value = false;
 };
 
-
 const editEvent = () => {
+  if (!selectedEvent.value) return;
+
   isCreating.value = true;
   isEditing.value = true;
+
   newEvent.value = {
+    id: selectedEvent.value.id,
     title: selectedEvent.value.title,
     description: selectedEvent.value.description,
     date: [new Date(selectedEvent.value.start), new Date(selectedEvent.value.end)]
   };
 };
 
+const resetForm = () => {
+  isCreating.value = false;
+  isEditing.value = false;
+  selectedEvent.value = null;
+  newEvent.value = { id: null, title: '', description: '', date: [] };
+};
+
+const deleteEvent =  () => {
+  if (!selectedEvent.value) return
+  
+  // Фильтруем события, оставляя только те, чей ID не совпадает с удаляемым
+  const updatedEvents = events.value.filter(e => e.id !== selectedEvent.value.id)
+  
+  // Сохраняем обновлённый список
+   saveUserEvents(currentUser.value.name, updatedEvents)
+  
+  // Обновляем локальное состояние
+  events.value = updatedEvents
+  selectedEvent.value = null
+}
+
 const cancelEdit = () => {
   isCreating.value = false;
   isEditing.value = false;
 };
-
 </script>
 <style lang="sass">
 @import '@color'
