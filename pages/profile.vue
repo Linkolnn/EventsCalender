@@ -13,8 +13,8 @@
           <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
         </form>  
         <form class="profile__form" @submit.prevent="editEvent" v-else-if="selectedEvent">
-          <h3>{{ selectedEvent.title }}</h3>
-          <p>{{ selectedEvent.description }}</p>
+          <h3 class="profile__edit-title">{{ selectedEvent.title }}</h3>
+          <p class="profile__edit-text">{{ selectedEvent.description }}</p>
           <h4>{{ formatDate(selectedEvent.start) }}</h4>
           <h4>{{ formatDate(selectedEvent.end) }}</h4>
           <button class="btn font-button" type="submit">Изменить</button>
@@ -201,6 +201,11 @@ onMounted(() => {
 .profile__section
   flex: 1
 
+.profile__edit-title, profile__edit-text
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+
 .profile__create-block
   display: flex
   flex-direction: row
@@ -303,5 +308,5 @@ onMounted(() => {
       width: 200px
 
   .calendar
-    height: 75vh
+    height: 70vh
 </style>
