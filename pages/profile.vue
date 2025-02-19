@@ -1,28 +1,33 @@
 <template>
   <div v-if="currentUser" class="profile__page">
-    <aside class="profile__aside" :class="{ active: selectedEvent || isCreating }">
-      <form v-if="isCreating" @submit.prevent="createEvent">
-        <input v-model="newEvent.title" placeholder="Название события" required />
-        <textarea v-model="newEvent.description" placeholder="Описание события" required></textarea>
-        <VueDatePicker class="profile__datapicker" v-model="newEvent.date" inline locale="ru" range/>
-        <button class="btn font-button" type="submit">{{ isEditing ? 'Сохранить' : 'Создать' }}</button>
-        <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
-      </form>
-      
-      <form @submit.prevent="editEvent" v-else-if="selectedEvent">
-        <h3>{{ selectedEvent.title }}</h3>
-        <p>{{ selectedEvent.description }}</p>
-        <p>{{ formatDate(selectedEvent.start) }}</p>
-        <p>{{ formatDate(selectedEvent.end) }}</p>
-        <button class="btn font-button" type="submit">Изменить</button>
-        <button class="btn font-button" type="button" @click="selectedEvent = null">Отмена</button>
-        <button class="btn font-button" type="button" @click="deleteEvent">Удалить</button>
-      </form>
-    </aside>
-
-    <section class="profile__section section">
-      <h1>Профиль {{ currentUser.name }}</h1>
-      <button class="btn font-button" @click="startCreating">Создать событие</button>
+    <Transition name="aside">
+      <aside class="profile__aside" v-if="aside">
+        <h2 class="profile_aside-title">{{ isCreating ? 'Создание событие':'Изменить событие'}}</h2>
+        <form class="profile__form" v-if="isCreating" @submit.prevent="createEvent">
+          <label class="font-text_medium">Название</label>
+          <input class="inp" v-model="newEvent.title" required />
+          <label class="font-text_medium">Описание</label>
+          <textarea class="inp" v-model="newEvent.description" required></textarea>
+          <VueDatePicker class="profile__datapicker" v-model="newEvent.date" inline auto-apply locale="ru" range/>
+          <button class="btn font-button" type="submit">{{ isEditing ? 'Сохранить' : 'Создать' }}</button>
+          <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
+        </form>  
+        <form class="profile__form" @submit.prevent="editEvent" v-else-if="selectedEvent">
+          <h3>{{ selectedEvent.title }}</h3>
+          <p>{{ selectedEvent.description }}</p>
+          <h4>{{ formatDate(selectedEvent.start) }}</h4>
+          <h4>{{ formatDate(selectedEvent.end) }}</h4>
+          <button class="btn font-button" type="submit">Изменить</button>
+          <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
+          <button class="btn-delete btn font-button" type="button" @click="deleteEvent">Удалить</button>
+        </form>
+      </aside>
+    </Transition>
+    <section ref="profileRef" class="profile__section section">
+      <div class="profile__create-block">
+        <button class="btn font-button" @click="startCreating">Создать событие</button>
+        <h1>Профиль {{ currentUser.name }}</h1>
+      </div>
       <vue-cal
         locale="ru"
         class="calendar"
@@ -34,6 +39,7 @@
         :transitions="false"
         events-on-month-view="short"
         :events-count-on-year-view="false"
+        :disable-duplicate-events="true"
         @event-click="showEventDetails"
       />
     </section>
@@ -46,9 +52,12 @@ import 'vue-cal/dist/vuecal.css';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { useEvents } from '@/composables/useEvents';
+import gsap from 'gsap';
 
 const { currentUser } = useAuth();
 const { getUserEvents, saveUserEvents } = useEvents();
+const aside = ref(null);
+const profileRef = ref(null);
 const events = ref([]);
 const isCreating = ref(false);
 const isEditing = ref(false);
@@ -78,6 +87,7 @@ const formatDate = (date) => {
 };
 
 const startCreating = () => {
+  aside.value = true;
   isCreating.value = true;
   isEditing.value = false;
   newEvent.value = { title: '', description: '', date: [] };
@@ -111,16 +121,16 @@ const createEvent =  () => {
 };
 
 const showEventDetails = (event) => {
+  aside.value = true;
   selectedEvent.value = event;
   isCreating.value = false;
 };
 
 const editEvent = () => {
   if (!selectedEvent.value) return;
-
+  aside.value = true;
   isCreating.value = true;
   isEditing.value = true;
-
   newEvent.value = {
     id: selectedEvent.value.id,
     title: selectedEvent.value.title,
@@ -133,59 +143,100 @@ const resetForm = () => {
   isCreating.value = false;
   isEditing.value = false;
   selectedEvent.value = null;
+  aside.value = false;
   newEvent.value = { id: null, title: '', description: '', date: [] };
 };
 
-const deleteEvent =  () => {
-  if (!selectedEvent.value) return
-  
-  // Фильтруем события, оставляя только те, чей ID не совпадает с удаляемым
-  const updatedEvents = events.value.filter(e => e.id !== selectedEvent.value.id)
-  
-  // Сохраняем обновлённый список
-   saveUserEvents(currentUser.value.name, updatedEvents)
-  
-  // Обновляем локальное состояние
-  events.value = updatedEvents
-  selectedEvent.value = null
-}
+const deleteEvent = () => {
+  if (!selectedEvent.value) return;
+  const isConfirmed = window.confirm("Вы уверены, что хотите удалить это событие?");
+  if (!isConfirmed) return;
+
+  aside.value = false;
+
+  const updatedEvents = events.value.filter(e => e.id !== selectedEvent.value.id);
+  saveUserEvents(currentUser.value.name, updatedEvents);
+  events.value = updatedEvents;
+  selectedEvent.value = null;
+};
 
 const cancelEdit = () => {
   isCreating.value = false;
   isEditing.value = false;
+  aside.value = false;
 };
+
+onMounted(() => {
+  gsap.fromTo(
+    profileRef.value,
+    { opacity: 0, y: 50 },
+    { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+  );
+});
 </script>
 <style lang="sass">
 @import '@color'
 @import '@global'
 @import '@mixin'
 
+.aside-enter-active,
+.aside-leave-active 
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease
+
+.aside-enter-from,
+.aside-leave-to 
+  transform: translateX(-100%)
+  opacity: 0
+
+.aside-enter-to,
+.aside-leave-from 
+  transform: translateX(0)
+  opacity: 1
+
 .profile__page
+  position: relative
   background: rgb(255 255 255 / 50%) 
   display: flex
+
+.profile__section
+  flex: 1
+
+.profile__create-block
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  padding: 0px 20px
+  gap: 10px
+  margin-bottom: 10px
+  .btn
+    width: 200px
+
+.profile__aside
+  display: flex
+  flex-direction: column 
+  width: 320px
+
+.profile_aside-title
+  text-align: center
+  padding: 0 20px
+
+.profile__form
+  height: 120%
+  width: 100%
+  background: rgb(255 255 255 / 50%) 
+  display: flex
+  flex-direction: column
+  padding: 20px
   gap: 20px
+
+.btn-delete
+  background: #ff0000 !important
+
+.dp__flex_display
+  align-items: center
 
 .calendar 
   height: 90vh
-
-.profile__datapicker
-  top: 0 
-  .dp__arrow_top
-    display: none
-  .dp--menu-wrapper
-    transform: translateY(-50px)
-    top: 0
-
-
-.profile__aside
-  display: none
-  width: 300px
-  transition: 0.3s
-  &.active
-    display: block
-    padding: 20px
-    transition: 0.3s
-    border-radius: 8px
 
 .vuecal__event
   cursor: pointer
@@ -193,17 +244,33 @@ const cancelEdit = () => {
     opacity: 0.8
 
 .vuecal__event
-  padding: 20px 0px
+  padding: 10px 0px
   background: $purple
   color: $white
+
+.vuecal__event-title 
+  text-align: center !important
+
+.vuecal__no-event 
+  display: none
 
 .weekday-label
   flex-direction: column
 
+.vuecal__title-bar
+  background: $white
+
 .vuecal__arrow--next, .vuecal__arrow--prev
   border-radius: $radius
+  color: $white
   background: $purple
   padding: 10px
+
+.vuecal__arrow--prev
+  margin-left: 20px
+
+.vuecal__arrow--next
+  margin-right: 20px
 
 .vuecal__cell-events
   display: flex
@@ -213,18 +280,28 @@ const cancelEdit = () => {
 .vuecal__cell-events-count
   border-radius: 0px
   width: 100%
-  background: $purple
-
-.profile__section
-  flex: 1
-
-vue-cal
-  width: 100%
-  height: 600px
-
-
+  background: $purple 
 
 @include mobile
+  .profile__aside
+    position: absolute;
+    left: 0;
+    overflow-y: scroll
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: $gradient;
+
+  .profile__create-block
+    display: flex
+    flex-direction: column-reverse
+    align-items: center
+    gap: 10px
+    margin-bottom: 10px
+    .btn
+      width: 200px
+
   .calendar
-    height: 70vh
+    height: 75vh
 </style>

@@ -12,7 +12,7 @@
 
 
 .register
-    background: linear-gradient($white 70%, $purple 100%)
+    background: $gradient
     display: flex
     flex-direction: column
     justify-content: center

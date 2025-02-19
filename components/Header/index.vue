@@ -23,14 +23,7 @@ const isAuth = computed(() => !!currentUser.value);
     background: transparent
     padding: 20px
 
-.header__profile
-    
-
 .header__logo-link
     color:$black
-
-@include mobile
-  .header
-    flex-direction: column
 
 </style>

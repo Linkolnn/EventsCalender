@@ -48,4 +48,9 @@ const handleLogout = () => {
 
 .nav__menu-link 
     color: $white
+
+@include mobile
+  .nav__menu-list
+    gap: 10px
+
 </style>
