@@ -15,5 +15,5 @@
 
 @include mobile
   .section
-    min-height: 75vh
+    min-height: 70vh
 </style>
