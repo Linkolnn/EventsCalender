@@ -16,7 +16,7 @@ const data = {
             },
             {
                 url: "/login",
-                text: 'Авторизация'
+                text: 'Войти'
             }
         ];
 
