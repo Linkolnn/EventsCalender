@@ -19,7 +19,7 @@ onMounted(() => {
 <template>
     <section ref="sectionRef" class="welcome section">
       <h1 ref="titleRef" class="welcome__title font-h1">
-        Event Calendar — удобный инструмент для планирования и управления событиями.
+        Zillendar — удобный инструмент для планирования и управления событиями.
       </h1>
       <p ref="textRef" class="welcome__text font-text_extra-large">
         Добавляйте встречи, задачи и важные даты в пару кликов, а благодаря сохранению данных в cookies ваш график всегда будет под рукой.
@@ -33,7 +33,21 @@ onMounted(() => {
         </NuxtLink>
       </div>
     </section>
-    <section class="section" id="more"></section>
+    <section class="about section" id="more">
+        <img src="/assets/logo-light.svg" alt="Лого проекта" class="about__logo" />
+        <div class="about__content">
+          <h2 class="about__title font-h2">О проекте</h2>
+          <p class="about__description font-text_medium">
+            Это простое приложение-календарь на Nuxt 3, позволяющее регистрироваться и управлять событиями без серверной части.
+            Авторизация и сохранение данных осуществляется с помощью cookie.  
+          </p>
+          <ul class="about__features">
+            <li class="font-text_medium"><strong>Регистрация и вход:</strong> безопасное хранение паролей с хэшированием.</li>
+            <li class="font-text_medium"><strong>Управление событиями:</strong> создание, редактирование и удаление задач для каждого пользователя.</li>
+            <li class="font-text_medium"><strong>Сохранение данных:</strong> события хранятся в cookies и доступны после перезагрузки.</li>
+          </ul>
+        </div>
+    </section>
 </template>
 <style lang="sass">
 @import @color
@@ -64,6 +78,31 @@ onMounted(() => {
 
 .welcome__btn
     font-size: 24px 
+
+.about 
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  gap: 20px
+
+.about__logo 
+  width: 100px
+
+.about__content 
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 20px
+  > *
+    color: $white
+    width: 80%
+    text-align: center
+    
+.about__features 
+  display: flex
+  flex-direction: column
+  gap: 20px
 
 @include mobile
   .welcome__text

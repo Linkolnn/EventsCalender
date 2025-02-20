@@ -2,11 +2,16 @@
 import data from '@services/data';
 const { logout, currentUser } = useAuth();
 
+const props = defineProps({
+  variant: {
+    type: String,
+    default: 'header',
+    validator: (value) => ['header', 'footer'].includes(value)
+  }
+});
+
 const menuItems = computed(() => 
-  data.navMenuItems(!!currentUser.value).map(item => ({
-    ...item,
-    isAction: item.url === '#logout'
-  }))
+  data.navMenu(props.variant, !!currentUser.value)
 );
 
 const handleLogout = () => {
@@ -14,21 +19,31 @@ const handleLogout = () => {
   navigateTo('/');
 };
 </script>
+
 <template>
-    <nav class="nav__menu">
-        <ul class="nav__menu-list">
-            <li class="nav__menu-item" v-for="item in menuItems" :key="item.url">
-                 <NuxtLink v-if="!item.isAction" :to="item.url" class="nav__menu-link">
-                    <button class="nav__menu-btn btn font-button">
-                      {{ item.text }}
-                    </button>
-                 </NuxtLink>
-                 <button v-else class="nav__menu-btn btn font-button" @click="handleLogout">
-                    {{ item.text }}
-                 </button>
-            </li>
-        </ul>
-    </nav>
+  <nav class="nav__menu">
+    <ul :class="[variant === 'footer' ? 'nav__menu-list--footer' : 'nav__menu-list--header']">
+      <li class="nav__menu-item" v-for="item in menuItems" :key="item.url">
+        <NuxtLink 
+          v-if="!item.url.startsWith('#')" 
+          :to="item.url" 
+          class="nav__menu-link"
+          :class="{ 'nav__menu-link--footer': variant === 'footer' }"
+        >
+          <button class="nav__menu-btn btn font-button">
+            {{ item.text }}
+          </button>
+        </NuxtLink>
+        <button 
+          v-else 
+          class="nav__menu-btn btn font-button" 
+          @click="item.url === '#logout' ? handleLogout() : null"
+        >
+          {{ item.text }}
+        </button>
+      </li>
+    </ul>
+  </nav>
 </template>
 <style lang="sass">
 @import @color
@@ -37,11 +52,17 @@ const handleLogout = () => {
 @import @fonts
 
 .nav__menu 
-    display: flex
-    flex-direction: row
-    align-items: center
+  display: flex
+  flex-direction: row
+  align-items: center
 
-.nav__menu-list
+.nav__menu-list--footer
+  display: flex
+  flex-direction: column
+  align-items: flex-end
+  gap: 10px   
+
+.nav__menu-list--header
     display: flex
     flex-direction: row
     gap: 20px 

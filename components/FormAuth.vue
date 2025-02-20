@@ -58,9 +58,9 @@ onMounted(() => {
             <button class="btn font-button" type="submit">
                 {{ type === 'register' ? 'Зарегистрироваться' : 'Войти' }}
             </button>
-        <template v-if="type === 'login'">
+        <!-- <template v-if="type === 'login'">
             <button class="btn font-button" type="button">Восстановить пароль</button>
-        </template>
+        </template> -->
     </form>
 </template>
 <style lang="sass">
@@ -76,6 +76,13 @@ onMounted(() => {
     padding: 20px
     gap: 20px
     width: 700px
+
+.error-message
+  border-radius: $radius
+  background: red
+  color: $white
+  padding: 5px
+  transition: 0.5s ease
 
 @include mobile
   .form

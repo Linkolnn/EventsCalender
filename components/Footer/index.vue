@@ -1,6 +1,9 @@
 <template>
     <footer class="footer">
-        <h1>asd</h1>
+        <NuxtLink to="/" class="footer__logo-link">
+          <img class="footer__logo-img" src="/public/assets/logo-light.svg" alt="">
+        </NuxtLink>
+        <NavMenu variant="footer"/>
     </footer>
 </template>
 <style lang="sass">
@@ -8,8 +11,13 @@
 @import @global
 @import @mixin
 
-
 .footer 
-    padding: 20px
+    display: flex
+    flex-direction: row
+    justify-content: space-between
     background: $black
+    padding: 20px
+
+.footer__logo-img
+    width: 80px
 </style>

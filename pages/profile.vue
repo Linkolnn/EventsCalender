@@ -7,7 +7,7 @@
           <label class="font-text_medium">Название</label>
           <input class="inp" v-model="newEvent.title" required />
           <label class="font-text_medium">Описание</label>
-          <textarea class="inp" v-model="newEvent.description" required></textarea>
+          <textarea class="inp textarea" v-model="newEvent.description" required></textarea>
           <VueDatePicker class="profile__datapicker" v-model="newEvent.date" inline auto-apply locale="ru" range/>
           <button class="btn font-button" type="submit">{{ isEditing ? 'Сохранить' : 'Создать' }}</button>
           <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
@@ -36,7 +36,7 @@
         :time="false"
         active-view="week"
         hide-view-selector
-        :transitions="false"
+        :transitions="true"
         events-on-month-view="short"
         :events-count-on-year-view="false"
         :disable-duplicate-events="true"
@@ -54,9 +54,10 @@ import '@vuepic/vue-datepicker/dist/main.css';
 import { useEvents } from '@/composables/useEvents';
 import gsap from 'gsap';
 
-const { currentUser } = useAuth();
+const { currentUser, checkAuth } = useAuth();
 const { getUserEvents, saveUserEvents } = useEvents();
 const aside = ref(null);
+const router = useRouter()
 const profileRef = ref(null);
 const events = ref([]);
 const isCreating = ref(false);
@@ -167,6 +168,9 @@ const cancelEdit = () => {
 };
 
 onMounted(() => {
+  if (!currentUser.value) {
+    navigateTo('/login');
+  }
   gsap.fromTo(
     profileRef.value,
     { opacity: 0, y: 50 },
@@ -197,6 +201,9 @@ onMounted(() => {
 .aside-leave-from 
   transform: translateX(0)
   opacity: 1
+
+.textarea
+  min-height: 130px
 
 .profile__page
   position: relative
@@ -239,6 +246,7 @@ onMounted(() => {
 
 .dp__flex_display
   align-items: center
+  justify-content: center
 
 .calendar 
   height: 90vh

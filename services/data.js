@@ -1,33 +1,45 @@
 const data = {
-    navMenuItems(isAuth) {
-        return isAuth ? [
+    navMenu(menuType = 'header', isAuth = false) {
+        const baseItems = isAuth ? [
             {
-              url: "/profile",
-              text: 'Профиль'
+                url: "/profile",
+                text: 'Профиль'
             },
             {
-              url: "#logout",
-              text: 'Выйти'
+                url: "#logout",
+                text: 'Выйти'
             }
         ] : [
             {
-              url: "/register",
-              text: 'Регистрация'
+                url: "/register",
+                text: 'Регистрация'
             },
             {
-              url: "/login",
-              text: 'Авторизация'
+                url: "/login",
+                text: 'Авторизация'
             }
         ];
+
+        const additionalItems = {
+            footer: [
+                {
+                    url: "/#more",
+                    text: 'О нас'
+                }
+            ],
+            header: []
+        };
+
+        return [...baseItems, ...(additionalItems[menuType] || [])];
     },
     welcomeListBtn() {
-        return [
-            {
-                url: "/#more",
-                text: 'Подробнее'
-            },
-        ];
-    },
+      return [
+          {
+              url: "/#more",
+              text: 'Подробнее'
+          },
+      ];
+  },
 };
 
 export default data;
