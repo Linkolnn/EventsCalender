@@ -7,7 +7,7 @@
           <label class="font-text_medium">Название</label>
           <input class="inp" v-model="newEvent.title" required />
           <label class="font-text_medium">Описание</label>
-          <textarea class="inp textarea" v-model="newEvent.description" required></textarea>
+          <textarea class="inp textarea" v-model="newEvent.description"></textarea>
           <VueDatePicker class="profile__datapicker" v-model="newEvent.date" inline auto-apply locale="ru" range/>
           <button class="btn font-button" type="submit">{{ isEditing ? 'Сохранить' : 'Создать' }}</button>
           <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
@@ -255,10 +255,16 @@ onMounted(() => {
   padding: 10px 0px
   background: $purple
   color: $white
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: pre-line;
-  cursor: pointer
+  word-wrap: break-word
+  overflow-wrap: break-word
+  white-space: normal
+  display: -webkit-box
+  -webkit-box-orient: vertical
+  -webkit-line-clamp: 3
+  overflow: hidden
+  text-overflow: ellipsis
+  line-height: 1.5
+  max-height: calc(1.8em * 3)
   &:hover
     opacity: 0.8
 
