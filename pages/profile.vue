@@ -36,7 +36,7 @@
         :time="false"
         active-view="week"
         hide-view-selector
-        :transitions="true"
+        :transitions="false"
         events-on-month-view="short"
         :events-count-on-year-view="false"
         :disable-duplicate-events="true"
@@ -260,6 +260,9 @@ onMounted(() => {
   padding: 10px 0px
   background: $purple
   color: $white
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-line;
 
 .vuecal__event-title 
   text-align: center !important
