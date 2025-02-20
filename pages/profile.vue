@@ -328,6 +328,14 @@ onMounted(() => {
   background: $purple 
 
 @include mobile
+  .vuecal__today-btn
+    position: absolute
+    transform: translateY(-90px)
+    right: 0
+
+  .vuecal__arrow--prev
+    margin-right: 0
+
   .profile__aside
     position: absolute;
     left: 0;
@@ -341,7 +349,7 @@ onMounted(() => {
   .profile__create-block
     display: flex
     flex-direction: column-reverse
-    align-items: center
+    align-items: start
     gap: 10px
     margin-bottom: 10px
     .btn
