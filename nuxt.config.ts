@@ -12,6 +12,25 @@ export default defineNuxtConfig({
     '@fonts': resolve(__dirname, './const/fonts.sass'),
   },
 
+  app: {
+    head: {
+      link: [
+        {
+            rel: 'icon',
+            type: 'image/svg+xml',
+            href: '/assets/logo-dark.svg',
+            media: '(prefers-color-scheme: light)'
+          },
+          {
+            rel: 'icon',
+            type: 'image/svg+xml',
+            href: '/assets/logo-light.svg',
+            media: '(prefers-color-scheme: dark)'
+          },
+      ]
+    }
+  },
+
   fonts: {
       provider: "local",
       defaults: {
