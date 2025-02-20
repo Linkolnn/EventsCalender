@@ -5,9 +5,9 @@
         <h2 class="profile_aside-title">{{ isCreating ? 'Создание событие':'Изменить событие'}}</h2>
         <form class="profile__form" v-if="isCreating" @submit.prevent="createEvent">
           <label class="font-text_medium">Название</label>
-          <input class="inp" v-model="newEvent.title" required />
+          <input maxlength="80" class="inp" v-model="newEvent.title" required />
           <label class="font-text_medium">Описание</label>
-          <textarea class="inp textarea" v-model="newEvent.description"></textarea>
+          <textarea maxlength="250" class="inp textarea" v-model="newEvent.description"></textarea>
           <VueDatePicker class="profile__datapicker" v-model="newEvent.date" inline auto-apply locale="ru" range/>
           <button class="btn font-button" type="submit">{{ isEditing ? 'Сохранить' : 'Создать' }}</button>
           <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
@@ -37,6 +37,7 @@
         active-view="week"
         :hide-view-selector
         :transitions="true"
+        todayButton
         events-on-month-view="short"
         :events-count-on-year-view="false"
         :disable-duplicate-events="true"
@@ -268,6 +269,16 @@ onMounted(() => {
   &:hover
     opacity: 0.8
 
+.vuecal__today-btn
+  margin-right: 20px
+  padding: 8px
+  border-radius: $radius
+  color: $white
+  background: $purple
+  @include transition
+  .default
+    font-size: 12px !important
+
 .vuecal__menu
   background: $purple
 
@@ -296,6 +307,7 @@ onMounted(() => {
 
 .vuecal__arrow--prev
   margin-left: 20px
+  margin-right: 105px
 
 .vuecal__arrow--next
   margin-right: 20px
