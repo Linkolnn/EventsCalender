@@ -330,8 +330,12 @@ onMounted(() => {
 @include mobile
   .vuecal__today-btn
     position: absolute
-    transform: translateY(-90px)
+    padding: 10px
+    transform: translateY(-91px)
     right: 0
+    .default
+      font-size: 13px !important
+
 
   .vuecal__arrow--prev
     margin-right: 0
