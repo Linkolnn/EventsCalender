@@ -233,7 +233,7 @@ onMounted(() => {
   padding: 0 20px
 
 .profile__form
-  height: 120%
+  height: 150%
   width: 100%
   background: rgb(255 255 255 / 50%) 
   display: flex
