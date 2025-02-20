@@ -272,6 +272,7 @@ onMounted(() => {
   background: $purple
 
 .vuecal__view-btn
+  font-size: 18px
   color: $white
   border: none
 
