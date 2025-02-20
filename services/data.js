@@ -24,7 +24,7 @@ const data = {
             footer: [
                 {
                     url: "/#more",
-                    text: 'О нас'
+                    text: 'О проекте'
                 }
             ],
             header: []
