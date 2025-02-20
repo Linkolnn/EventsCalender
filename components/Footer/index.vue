@@ -20,4 +20,9 @@
 
 .footer__logo-img
     width: 80px
+
+@inlude mobile
+    .footer__logo-img
+        width: 65px
+
 </style>
