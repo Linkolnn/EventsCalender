@@ -81,6 +81,7 @@ onMounted(() => {
 
 .about 
   display: flex
+  min-height: 90vh
   flex-direction: column
   justify-content: center
   align-items: center
