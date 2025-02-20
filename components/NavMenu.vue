@@ -65,7 +65,7 @@ const handleLogout = () => {
 .nav__menu-list--header
     display: flex
     flex-direction: row
-    gap: 20px 
+    gap: 10px 
 
 .nav__menu-link 
     color: $white
