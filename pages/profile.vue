@@ -5,9 +5,15 @@
         <h2 class="profile_aside-title">{{ isCreating ? 'Создание событие':'Изменить событие'}}</h2>
         <form class="profile__form" v-if="isCreating" @submit.prevent="createEvent">
           <label class="font-text_medium">Название</label>
-          <input maxlength="80" class="inp" v-model="newEvent.title" required />
+          <input maxlength="100" class="inp" v-model="newEvent.title" required />
+          <span class="profile__form-counter ">
+            {{ newEvent.title.length }}/100
+          </span>
           <label class="font-text_medium">Описание</label>
-          <textarea maxlength="250" class="inp textarea" v-model="newEvent.description"></textarea>
+          <textarea maxlength="400"  class="inp textarea" v-model="newEvent.description"></textarea>
+          <span class="profile__form-counter ">
+            {{ newEvent.description.length }}/400
+          </span>
           <VueDatePicker class="profile__datapicker" v-model="newEvent.date" inline auto-apply locale="ru" range/>
           <button class="btn font-button" type="submit">{{ isEditing ? 'Сохранить' : 'Создать' }}</button>
           <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
@@ -58,7 +64,6 @@ import gsap from 'gsap';
 const { currentUser } = useAuth();
 const { getUserEvents, saveUserEvents } = useEvents();
 const aside = ref(null);
-const router = useRouter()
 const profileRef = ref(null);
 const events = ref([]);
 const isCreating = ref(false);
@@ -242,6 +247,11 @@ onMounted(() => {
   padding: 20px
   gap: 20px
 
+.profile__form-counter
+  transform: translateY(-15px)
+  width: max-content
+  // margin-left: auto
+
 .btn-delete
   background: #ff0000 !important
 
@@ -330,7 +340,7 @@ onMounted(() => {
 @include mobile
   .vuecal__today-btn
     position: absolute
-    padding: 10px
+    padding: 9px
     transform: translateY(-91px)
     right: 0
     .default
