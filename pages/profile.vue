@@ -293,6 +293,7 @@ onMounted(() => {
   margin-right: 20px
 
 .vuecal__cell
+  padding: 10px 0px
   min-width: 50px
   min-height: 50px
 
