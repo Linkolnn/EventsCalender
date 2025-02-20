@@ -252,14 +252,15 @@ onMounted(() => {
   height: 90vh
 
 .vuecal__event
-  cursor: pointer
-  &:hover
-    opacity: 0.8
-
-.vuecal__event
   padding: 10px 0px
   background: $purple
   color: $white
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+  cursor: pointer
+  &:hover
+    opacity: 0.8
 
 .vuecal__event-title 
   text-align: center !important
