@@ -22,6 +22,9 @@
     width: 80px
 
 @include mobile
+    .footer
+        padding: 10px 
+
     .footer__logo-img
         width: 65px
 
