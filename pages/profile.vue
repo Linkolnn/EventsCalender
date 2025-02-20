@@ -35,7 +35,7 @@
         :disable-touch="true"
         :time="false"
         active-view="week"
-        hide-view-selector
+        :hide-view-selector
         :transitions="true"
         events-on-month-view="short"
         :events-count-on-year-view="false"
@@ -267,6 +267,13 @@ onMounted(() => {
   max-height: calc(1.8em * 3)
   &:hover
     opacity: 0.8
+
+.vuecal__menu
+  background: $purple
+
+.vuecal__view-btn
+  color: $white
+  border: none
 
 .vuecal__event-title 
   text-align: center !important
