@@ -292,6 +292,10 @@ onMounted(() => {
 .vuecal__arrow--next
   margin-right: 20px
 
+.vuecal__cell
+  min-width: 50px
+  min-height: 50px
+
 .vuecal__cell-events
   display: flex
   flex-direction: column
