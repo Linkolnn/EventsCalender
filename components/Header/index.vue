@@ -26,7 +26,7 @@ const isAuth = computed(() => !!currentUser.value);
 .header__logo-img
     width: 80px
 
-@inlude mobile
+@include mobile
     .header__logo-img
         width: 65px
     
