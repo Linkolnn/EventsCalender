@@ -36,7 +36,7 @@
         :time="false"
         active-view="week"
         hide-view-selector
-        :transitions="false"
+        :transitions="true"
         events-on-month-view="short"
         :events-count-on-year-view="false"
         :disable-duplicate-events="true"
@@ -54,7 +54,7 @@ import '@vuepic/vue-datepicker/dist/main.css';
 import { useEvents } from '@/composables/useEvents';
 import gsap from 'gsap';
 
-const { currentUser, checkAuth } = useAuth();
+const { currentUser } = useAuth();
 const { getUserEvents, saveUserEvents } = useEvents();
 const aside = ref(null);
 const router = useRouter()
@@ -260,9 +260,6 @@ onMounted(() => {
   padding: 10px 0px
   background: $purple
   color: $white
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: pre-line;
 
 .vuecal__event-title 
   text-align: center !important
