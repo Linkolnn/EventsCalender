@@ -1,6 +1,10 @@
 import CryptoJS from 'crypto-js';
+import { useCookie } from '#app';
 
 export function useAuth() {
+  const config = useRuntimeConfig();
+  const salt = config.public.salt;
+
   const users = useCookie('auth_users', { // Отдельная кука для хранения всех аккаунтов
     default: () => ({}),
     secure: true,
@@ -17,7 +21,7 @@ export function useAuth() {
     maxAge: 172800 // 2 дня
   });
 
-  const hashPassword = (password) => CryptoJS.SHA256(password + import.meta.env.VITE_SALT).toString();
+  const hashPassword = (password) => CryptoJS.SHA256(password + salt).toString();
 
   const register = (name, password) => {
     if (users.value[name]) {
@@ -51,16 +55,15 @@ export function useAuth() {
 
   const logout = () => {
     try {
-      // Сохраняем копию данных для корректного завершения
-      const userData = { ...currentUser.value }      
-      // Атомарное обновление состояния
-      currentUser.value = null
-      return true
+      currentUser.value = null;
+      useCookie('current_user').value = null; // Явное удаление куки
+      return true;
     } catch (error) {
-      alert('Ошибка при выходе:', error)
-      return false
+      alert('Ошибка при выходе:', error);
+      return false;
     }
-  }
+  };
+  
   return { 
     users: computed(() => users.value),
     currentUser: computed(() => currentUser.value),

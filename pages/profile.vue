@@ -41,7 +41,6 @@
         :disable-touch="true"
         :time="false"
         active-view="week"
-        :hide-view-selector
         :transitions="true"
         todayButton
         events-on-month-view="short"
@@ -298,7 +297,7 @@ onMounted(() => {
   background: $purple
 
 .vuecal__view-btn
-  font-size: 18px
+  font-size: 16px
   color: $white
   border: none
 
@@ -329,7 +328,7 @@ onMounted(() => {
 
 .vuecal__cell
   padding: 10px 0px
-  min-width: 50px
+  min-width: 40px
   min-height: 50px
 
 .vuecal__cell-events
@@ -346,7 +345,7 @@ onMounted(() => {
   .vuecal__today-btn
     position: absolute
     padding: 9px
-    transform: translateY(-91px)
+    transform: translateY(-87px)
     right: 0
     .default
       font-size: 13px !important

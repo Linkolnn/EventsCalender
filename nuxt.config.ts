@@ -11,7 +11,11 @@ export default defineNuxtConfig({
     '@mixin': resolve(__dirname, './const/mixin.sass'),
     '@fonts': resolve(__dirname, './const/fonts.sass'),
   },
-
+  runtimeConfig: {
+    public: {
+      salt: '1jkashdgo871godl71982569381o67toadg78108-98sjf98weye278'
+    }
+  },
   app: {
     head: {
       link: [
