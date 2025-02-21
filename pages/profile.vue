@@ -266,9 +266,9 @@ onMounted(() => {
   padding: 10px 0px
   background: $purple
   color: $white
-  word-wrap: break-word
-  overflow-wrap: break-word
-  white-space: pre-wrap
+  // word-wrap: break-word
+  // overflow-wrap: break-word
+  // white-space: pre-wrap
   display: -webkit-box
   -webkit-box-orient: vertical
   -webkit-line-clamp: 3
