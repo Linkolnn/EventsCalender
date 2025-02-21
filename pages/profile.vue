@@ -421,7 +421,6 @@ onMounted(() => {
 
 .vuecal__arrow--prev
   margin-left: 20px
-  margin-right: 105px
 
 .vuecal__arrow--next
   margin-right: 20px
