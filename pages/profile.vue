@@ -268,7 +268,7 @@ onMounted(() => {
   color: $white
   word-wrap: break-word
   overflow-wrap: break-word
-  white-space: normal
+  white-space: pre-wrap
   display: -webkit-box
   -webkit-box-orient: vertical
   -webkit-line-clamp: 3
@@ -278,6 +278,10 @@ onMounted(() => {
   max-height: calc(1.8em * 3)
   &:hover
     opacity: 0.8
+
+.vuecal__event-title
+  white-space: pre-wrap
+
 
 .vuecal__today-btn
   margin-right: 20px
