@@ -16,7 +16,8 @@ export function useEvents() {
         title: event.title,
         description: event.description,
         start: event.start.toISOString(),
-        end: event.end.toISOString()
+        end: event.end.toISOString(),
+        class: event.class
       }))
     };
   };
@@ -27,7 +28,8 @@ export function useEvents() {
       title: event.title,
       description: event.description,
       start: new Date(event.start),
-      end: new Date(event.end)
+      end: new Date(event.end),
+      class: event.class
     }));
   };
 

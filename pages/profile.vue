@@ -5,7 +5,7 @@
         <h2 class="profile_aside-title">{{ isCreating ? 'Создание событие':'Изменить событие'}}</h2>
         <form class="profile__form" v-if="isCreating" @submit.prevent="createEvent">
           <label class="font-text_medium">Название</label>
-          <input maxlength="100" class="inp" v-model="newEvent.title" required />
+          <input type="text" maxlength="100" class="inp" v-model="newEvent.title" required />
           <span class="profile__form-counter ">
             {{ newEvent.title.length }}/100
           </span>
@@ -14,6 +14,19 @@
           <span class="profile__form-counter ">
             {{ newEvent.description.length }}/400
           </span>
+          <label class="font-text_medium">Цвет события</label>
+          <div class="color-picker">
+            <button
+              v-for="color in colorOptions"
+              type="button"
+              class="color-option"
+              :class="[
+                color.class, 
+                { selected: newEvent.class === color.class }
+              ]"
+              @click="newEvent.class = color.class"
+            />
+          </div>
           <VueDatePicker class="profile__datapicker" v-model="newEvent.date" inline auto-apply locale="ru" range/>
           <button class="btn font-button" type="submit">{{ isEditing ? 'Сохранить' : 'Создать' }}</button>
           <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
@@ -72,8 +85,17 @@ const newEvent = ref({
   id: null,
   title: '', 
   description: '', 
-  date: [] 
+  date: [],
+  class: 'purple' 
 });
+
+const colorOptions = ref([
+  { class: 'red' },
+  { class: 'orange' },
+  { class: 'green' },
+  { class: 'blue' },
+  { class: 'purple' }
+]);
 
 const generateId = () => {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -96,26 +118,20 @@ const startCreating = () => {
   aside.value = true;
   isCreating.value = true;
   isEditing.value = false;
-  newEvent.value = { title: '', description: '', date: [] };
+  newEvent.value = { title: '', description: '', date: [], color: '#6A1B9A' };
 };
 
-watch(currentUser,  (user) => {
-  if (user) {
-    events.value = getUserEvents(user.name)
-  }
-}, { immediate: true })
-
-const createEvent =  () => {
+const createEvent = () => {
   if (newEvent.value.title && newEvent.value.date?.length === 2) {
     const eventData = {
       id: isEditing.value ? newEvent.value.id : generateId(),
       title: newEvent.value.title,
       description: newEvent.value.description,
       start: new Date(newEvent.value.date[0]),
-      end: new Date(newEvent.value.date[1])
+      end: new Date(newEvent.value.date[1]),
+      class: newEvent.value.class || 'purple'
     };
 
-    // Обновляем массив событий
     const updatedEvents = isEditing.value
       ? events.value.map(e => e.id === eventData.id ? eventData : e)
       : [...events.value, eventData];
@@ -141,7 +157,8 @@ const editEvent = () => {
     id: selectedEvent.value.id,
     title: selectedEvent.value.title,
     description: selectedEvent.value.description,
-    date: [new Date(selectedEvent.value.start), new Date(selectedEvent.value.end)]
+    date: [new Date(selectedEvent.value.start), new Date(selectedEvent.value.end)],
+    color: selectedEvent.value.color 
   };
 };
 
@@ -171,6 +188,13 @@ const cancelEdit = () => {
   isEditing.value = false;
   aside.value = false;
 };
+
+watch(currentUser,  (user) => {
+  if (user) {
+    events.value = getUserEvents(user.name)
+  }
+}, { immediate: true })
+
 
 onMounted(() => {
   if (!currentUser.value) {
@@ -249,7 +273,67 @@ onMounted(() => {
 .profile__form-counter
   transform: translateY(-15px)
   width: max-content
-  // margin-left: auto
+
+.color-picker
+  border: 2px solid $purple
+  border-radius: $radius
+  background: $white
+  justify-content: space-around
+  display: flex;
+  gap: 20px;
+  padding: 15px 
+  .color-option 
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+    &::after 
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      @include transition
+    &.selected 
+      border: 2px solid $dark-purple 
+      transform: scale(1.2);
+      @include transition
+
+    &.red::after 
+      background-color: $red
+    
+    &.orange::after 
+      background-color: $orange
+    
+    &.green::after 
+      background-color: $green
+    
+    &.blue::after 
+      background-color: $blue
+    
+    &.purple::after 
+      background-color: $purple
+
+.red 
+ background-color: $red
+
+.orange 
+ background-color: $orange
+
+.green 
+ background-color: $green
+
+.blue 
+ background-color: $blue
+
+.purple 
+ background-color: $purple
+
 
 .btn-delete
   background: #ff0000 !important
@@ -263,7 +347,7 @@ onMounted(() => {
 
 .vuecal__event
   padding: 10px 0px
-  background: $purple
+  // background: $purple
   color: $white
   word-wrap: break-word
   overflow-wrap: break-word
