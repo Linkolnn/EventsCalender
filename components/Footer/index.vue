@@ -14,6 +14,8 @@
 .footer 
     display: flex
     flex-direction: row
+    position: relative  
+    z-index: 1
     justify-content: space-between
     background: $black
     padding: 20px

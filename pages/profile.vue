@@ -374,7 +374,7 @@ onMounted(() => {
   justify-content: center
 
 .calendar 
-  height: 90vh
+  height: 100%
 
 .vuecal__event
   padding: 10px 1px
@@ -477,6 +477,4 @@ onMounted(() => {
       .btn-delete
         flex: 0 0 auto
 
-  .calendar
-    height: 70vh
 </style>
