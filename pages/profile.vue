@@ -266,9 +266,9 @@ onMounted(() => {
   padding: 10px 0px
   background: $purple
   color: $white
-  // word-wrap: break-word
-  // overflow-wrap: break-word
-  // white-space: pre-wrap
+  word-wrap: break-word
+  overflow-wrap: break-word
+  white-space: normal
   display: -webkit-box
   -webkit-box-orient: vertical
   -webkit-line-clamp: 3
@@ -280,7 +280,8 @@ onMounted(() => {
     opacity: 0.8
 
 .vuecal__event-title
-  white-space: pre-wrap
+  white-space: normal !important; // Заменяем pre-wrap на normal
+  word-break: break-word;
 
 
 .vuecal__today-btn
