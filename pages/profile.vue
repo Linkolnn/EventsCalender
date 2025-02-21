@@ -32,10 +32,12 @@
           <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
         </form>  
         <form class="profile__form" @submit.prevent="editEvent" v-else-if="selectedEvent">
-          <h3 class="profile_event-text">{{ selectedEvent.title }}</h3>
-          <p class="profile_event-text">{{ selectedEvent.description }}</p>
-          <h4>{{ formatDate(selectedEvent.start) }}</h4>
-          <h4>{{ formatDate(selectedEvent.end) }}</h4>
+          <div :class="selectedEvent.class" class="profile__form-content">
+            <h3 class="profile__event-text">{{ selectedEvent.title }}</h3>
+            <p class="profile__event-text">{{ selectedEvent.description }}</p>
+            <h4>{{ formatDate(selectedEvent.start) }}</h4>
+            <h4>{{ formatDate(selectedEvent.end) }}</h4>
+          </div>
           <button class="btn font-button" type="submit">Изменить</button>
           <button class="btn font-button" type="button" @click="cancelEdit">Отмена</button>
           <button class="btn-delete btn font-button" type="button" @click="deleteEvent">Удалить</button>
@@ -44,8 +46,14 @@
     </Transition>
     <section ref="profileRef" class="profile__section section">
       <div class="profile__create-block">
-        <button class="btn font-button" @click="startCreating">Создать событие</button>
         <h1>Профиль {{ currentUser.name }}</h1>
+        <div class="button-group">
+          <button class="btn font-button" @click="startCreating">Создать событие</button>
+          <button class="btn font-button" @click="$refs.vuecal.switchView('day', new Date())">Сегодня</button>
+          <button class="btn-delete btn font-button" @click="deleteAllEvent">
+            <IconTrashs class="font-text_medium" filled/>
+          </button>
+        </div>
       </div>
       <vue-cal
         locale="ru"
@@ -55,7 +63,6 @@
         :time="false"
         active-view="week"
         :transitions="true"
-        todayButton
         events-on-month-view="short"
         :events-count-on-year-view="false"
         :disable-duplicate-events="true"
@@ -183,6 +190,14 @@ const deleteEvent = () => {
   selectedEvent.value = null;
 };
 
+const deleteAllEvent = () => {
+  const isConfirmed = window.confirm("Вы уверены, что хотите удалить все события?");
+  if (!isConfirmed) return;
+  events.value = [];
+  saveUserEvents(currentUser.value.name, events.value);
+  selectedEvent.value = null;
+};
+
 const cancelEdit = () => {
   isCreating.value = false;
   isEditing.value = false;
@@ -212,7 +227,7 @@ onMounted(() => {
 @import '@global'
 @import '@mixin'
 
-.profile_event-text
+.profile__event-text
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-line;
@@ -249,8 +264,13 @@ onMounted(() => {
   padding: 0px 20px
   gap: 10px
   margin-bottom: 10px
+
+.button-group
+  display: flex
+  flex-direction: row
+  gap: 10px
   .btn
-    width: 200px
+    width: max-content
 
 .profile__aside
   display: flex
@@ -269,6 +289,15 @@ onMounted(() => {
   flex-direction: column
   padding: 20px
   gap: 20px
+
+.profile__form-content
+  padding: 20px
+  border-radius: $radius
+  display: flex
+  flex-direction: column
+  gap: 10px
+  > *
+    color: $white
 
 .profile__form-counter
   transform: translateY(-15px)
@@ -320,20 +349,19 @@ onMounted(() => {
       background-color: $purple
 
 .red 
- background-color: $red
+  background-color: $red
 
 .orange 
- background-color: $orange
+  background-color: $orange
 
 .green 
- background-color: $green
+  background-color: $green
 
 .blue 
- background-color: $blue
+  background-color: $blue
 
 .purple 
- background-color: $purple
-
+  background-color: $purple
 
 .btn-delete
   background: #ff0000 !important
@@ -346,8 +374,7 @@ onMounted(() => {
   height: 90vh
 
 .vuecal__event
-  padding: 10px 0px
-  // background: $purple
+  padding: 10px 1px
   color: $white
   word-wrap: break-word
   overflow-wrap: break-word
@@ -365,17 +392,6 @@ onMounted(() => {
 .vuecal__event-title
   white-space: normal !important; // Заменяем pre-wrap на normal
   word-break: break-word;
-
-
-.vuecal__today-btn
-  margin-right: 20px
-  padding: 8px
-  border-radius: $radius
-  color: $white
-  background: $purple
-  @include transition
-  .default
-    font-size: 12px !important
 
 .vuecal__menu
   background: $purple
@@ -426,15 +442,6 @@ onMounted(() => {
   background: $purple 
 
 @include mobile
-  .vuecal__today-btn
-    position: absolute
-    padding: 9px
-    transform: translateY(-87px)
-    right: 0
-    .default
-      font-size: 13px !important
-
-
   .vuecal__arrow--prev
     margin-right: 0
 
@@ -450,12 +457,23 @@ onMounted(() => {
 
   .profile__create-block
     display: flex
-    flex-direction: column-reverse
+    flex-direction: column
     align-items: start
     gap: 10px
     margin-bottom: 10px
-    .btn
-      width: 200px
+    > .btn
+    .button-group
+      width: 100%
+      display: flex
+      flex-wrap: wrap
+      flex-direction: row
+      gap: 10px
+      .btn:first-child 
+        flex: 1 1 100%
+      .btn 
+        flex: 1
+      .btn-delete
+        flex: 0 0 auto
 
   .calendar
     height: 70vh

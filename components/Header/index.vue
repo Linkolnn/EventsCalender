@@ -1,7 +1,7 @@
 <template>
     <header class="header" :class="{ 'header__profile': isAuth }">
         <NuxtLink to="/" class="header__logo-link">
-          <img class="header__logo-img" src="/public/assets/logo-dark.svg" alt="">
+            <IconLogoDark class="footer__logo-img" filled/>
         </NuxtLink>
         <NavMenu/>
     </header>
@@ -24,10 +24,12 @@ const isAuth = computed(() => !!currentUser.value);
     padding: 20px
 
 .header__logo-img
+    height: 80px
     width: 80px
 
 @include mobile
     .header__logo-img
+        height: 65px
         width: 65px
     
 </style>

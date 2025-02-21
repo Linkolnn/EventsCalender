@@ -34,19 +34,19 @@ onMounted(() => {
       </div>
     </section>
     <section class="about section" id="more">
-        <img src="/assets/logo-light.svg" alt="Лого проекта" class="about__logo" />
-        <div class="about__content">
-          <h2 class="about__title font-h2">О проекте</h2>
-          <p class="about__description font-text_medium">
-            Это простое приложение-календарь на Nuxt 3, позволяющее регистрироваться и управлять событиями без серверной части.
-            Авторизация и сохранение данных осуществляется с помощью cookie.  
-          </p>
-          <ul class="about__features">
-            <li class="font-text_medium"><strong>Регистрация и вход:</strong> безопасное хранение паролей с хэшированием.</li>
-            <li class="font-text_medium"><strong>Управление событиями:</strong> создание, редактирование и удаление задач для каждого пользователя.</li>
-            <li class="font-text_medium"><strong>Сохранение данных:</strong> события хранятся в cookies и доступны после перезагрузки.</li>
-          </ul>
-        </div>
+      <IconLogoLight class="about__logo" filled/>
+      <div class="about__content">
+        <h2 class="about__title font-h2">О проекте</h2>
+        <p class="about__description font-text_medium">
+          Это простое приложение-календарь на Nuxt 3, позволяющее регистрироваться и управлять событиями без серверной части.
+          Авторизация и сохранение данных осуществляется с помощью cookie.  
+        </p>
+        <ul class="about__features">
+          <li class="font-text_medium"><strong>Регистрация и вход:</strong> безопасное хранение паролей с хэшированием.</li>
+          <li class="font-text_medium"><strong>Управление событиями:</strong> создание, редактирование и удаление задач для каждого пользователя.</li>
+          <li class="font-text_medium"><strong>Сохранение данных:</strong> события хранятся в cookies и доступны после перезагрузки.</li>
+        </ul>
+      </div>
     </section>
 </template>
 <style lang="sass">
@@ -88,7 +88,8 @@ onMounted(() => {
   gap: 20px
 
 .about__logo 
-  width: 100px
+  height: 120px
+  width: 120px
 
 .about__content 
   display: flex

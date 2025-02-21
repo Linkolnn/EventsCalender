@@ -1,7 +1,7 @@
 <template>
     <footer class="footer">
         <NuxtLink to="/" class="footer__logo-link">
-          <img class="footer__logo-img" src="/public/assets/logo-light.svg" alt="">
+          <IconLogoLight class="footer__logo-img" filled/>
         </NuxtLink>
         <NavMenu variant="footer"/>
     </footer>
@@ -19,10 +19,12 @@
     padding: 20px
 
 .footer__logo-img
+    height: 80px
     width: 80px
 
 @include mobile
     .footer__logo-img
+        height: 65px
         width: 65px
 
 </style>

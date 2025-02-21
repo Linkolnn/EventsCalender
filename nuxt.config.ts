@@ -2,6 +2,7 @@ import { resolve } from "path";
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
+  modules: ['@nuxt/icon'],
   devtools: { enabled: true },
   alias: {
     '@components': resolve(__dirname, './components'),
@@ -11,10 +12,24 @@ export default defineNuxtConfig({
     '@mixin': resolve(__dirname, './const/mixin.sass'),
     '@fonts': resolve(__dirname, './const/fonts.sass'),
   },
+  svgo: {
+    autoImportPath: "./assets/icons/",
+    componentPrefix: "Icon",
+  },
+  css: ['@/const/global.sass'],
   runtimeConfig: {
     public: {
       salt: '1jkashdgo871godl71982569381o67toadg78108-98sjf98weye278'
     }
+  },
+  modules: ['@nuxt/icon', 'nuxt-svgo'],
+  icon: {
+    customCollections: [
+      {
+        prefix: 'icon',
+        dir: '/public/assets/'
+      },
+    ],
   },
   app: {
     head: {
@@ -22,13 +37,13 @@ export default defineNuxtConfig({
         {
             rel: 'icon',
             type: 'image/svg+xml',
-            href: '/assets/logo-dark.svg',
+            href: 'assets/icons/LogoDark.svg',
             media: '(prefers-color-scheme: light)'
           },
           {
             rel: 'icon',
             type: 'image/svg+xml',
-            href: '/assets/logo-light.svg',
+            href: '/assets/icons/LogoLight.svg',
             media: '(prefers-color-scheme: dark)'
           },
       ]
