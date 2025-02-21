@@ -56,6 +56,7 @@
         </div>
       </div>
       <vue-cal
+        ref="vuecal"
         locale="ru"
         class="calendar"
         :events="events"
@@ -247,7 +248,9 @@ onMounted(() => {
   opacity: 1
 
 .textarea
-  min-height: 130px
+  resize: vertical
+  min-height: 150px
+  max-height: 250px
 
 .profile__page
   position: relative
