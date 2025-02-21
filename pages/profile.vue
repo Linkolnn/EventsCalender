@@ -458,7 +458,7 @@ onMounted(() => {
     background: $gradient;
 
   .calendar 
-    height: 100%
+    height: 70vh
 
   .profile__create-block
     display: flex
