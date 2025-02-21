@@ -457,6 +457,9 @@ onMounted(() => {
     z-index: 1;
     background: $gradient;
 
+  .calendar 
+    height: 90vh
+
   .profile__create-block
     display: flex
     flex-direction: column
