@@ -31,26 +31,52 @@ export default defineNuxtConfig({
     head: {
       title: 'Zillendar',
       link: [
-        // Используем абсолютные пути для production
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          href: process.env.NODE_ENV === 'production' 
-            ? './assets//icons/LogoDark.svg' 
-            : '/_nuxt/assets/icons/LogoDark.svg',
+          href: '/icons/LogoDark.svg',
           media: '(prefers-color-scheme: light)',
           sizes: 'any'
         },
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          href: process.env.NODE_ENV === 'production' 
-            ? './assets//icons/LogoLight.svg' 
-            : '/_nuxt/assets/icons/LogoLight.svg',
+          href: '/icons/LogoLight.svg',
           media: '(prefers-color-scheme: dark)',
+          sizes: 'any'
+        },
+        {
+          rel: 'icon',
+          href: '/favicon.ico',
           sizes: 'any'
         }
       ]
+    }
+  },
+
+  nitro: {
+    static: true,
+    prerender: {
+      crawlLinks: true
+    },
+    publicAssets: [
+      {
+        dir: resolve(__dirname, 'assets/icons'),
+        baseURL: '/icons'
+      }
+    ]
+  },
+
+  hooks: {
+    'nitro:init'(nitro) {
+      nitro.options.routeRules = {
+        '/icons/**': {
+          headers: {
+            'Content-Type': 'image/svg+xml',
+            'Cache-Control': 'public, max-age=31536000, immutable'
+          }
+        }
+      }
     }
   },
   fonts: {
