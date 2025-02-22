@@ -40,25 +40,16 @@ export default defineNuxtConfig({
       link: [
         {
           rel: 'icon',
-          type: 'image/svg+xml',
-          href: process.env.NODE_ENV === 'production' 
-            ? '/icons/LogoDark.svg' 
-            : '/_nuxt/assets/icons/LogoDark.svg',
+          type: 'image/x-icon',
+          href: '/faviconDark.ico',
           media: '(prefers-color-scheme: light)',
           sizes: 'any'
         },
         {
           rel: 'icon',
-          type: 'image/svg+xml',
-          href: process.env.NODE_ENV === 'production' 
-            ? '/icons/LogoLight.svg' 
-            : '/_nuxt/assets/icons/LogoLight.svg',
+          type: 'image/x-icon',
+          href: '/faviconLight.ico',
           media: '(prefers-color-scheme: dark)',
-          sizes: 'any'
-        },
-        {
-          rel: 'icon',
-          href: '/icons/LogoLight.svg',
           sizes: 'any'
         }
       ]
