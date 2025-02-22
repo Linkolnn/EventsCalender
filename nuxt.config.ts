@@ -2,7 +2,6 @@ import { resolve } from "path";
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
-  modules:['nuxt-svgo'],
   devtools: { enabled: true },
   alias: {
     '@components': resolve(__dirname, './components'),
@@ -17,7 +16,14 @@ export default defineNuxtConfig({
     componentPrefix: "Icon",
     svgoConfig: {
       plugins: [
-        { name: 'preset-default' }
+        { 
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+            }
+          }
+        }
       ]
     }
   },
@@ -27,6 +33,7 @@ export default defineNuxtConfig({
       salt: '1jkashdgo871godl71982569381o67toadg78108-98sjf98weye278'
     }
   },
+  modules:['nuxt-svgo'],
   app: {
     head: {
       title: 'Zillendar',
@@ -34,42 +41,27 @@ export default defineNuxtConfig({
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          href: '/icons/LogoDark.svg',
+          href: process.env.NODE_ENV === 'production' 
+            ? './assets/icons/LogoDark.svg' 
+            : '/_nuxt/assets/icons/LogoDark.svg',
           media: '(prefers-color-scheme: light)',
           sizes: 'any'
         },
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          href: '/icons/LogoLight.svg',
+          href: process.env.NODE_ENV === 'production' 
+            ? './assets/icons/LogoLight.svg' 
+            : '/_nuxt/assets/icons/LogoLight.svg',
           media: '(prefers-color-scheme: dark)',
+          sizes: 'any'
+        },
+        {
+          rel: 'icon',
+          href: '/icons/LogoLight.svg',
           sizes: 'any'
         }
       ]
-    }
-  },
-  nitro: {
-    static: true,
-    prerender: {
-      crawlLinks: true
-    },
-    publicAssets: [
-      {
-        dir: resolve(__dirname, 'assets/icons'),
-        baseURL: '/icons'
-      }
-    ]
-  },
-  hooks: {
-    'nitro:init'(nitro) {
-      nitro.options.routeRules = {
-        '/icons/**': {
-          headers: {
-            'Content-Type': 'image/svg+xml',
-            'Cache-Control': 'public, max-age=31536000, immutable'
-          }
-        }
-      }
     }
   },
   fonts: {
