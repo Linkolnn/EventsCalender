@@ -55,6 +55,11 @@ export default defineNuxtConfig({
             : '/_nuxt/assets/icons/LogoLight.svg',
           media: '(prefers-color-scheme: dark)',
           sizes: 'any'
+        },
+        {
+          rel: 'icon',
+          href: '/icons/LogoLight.svg',
+          sizes: 'any'
         }
       ]
     }
