@@ -36,7 +36,7 @@ export default defineNuxtConfig({
           rel: 'icon',
           type: 'image/svg+xml',
           href: process.env.NODE_ENV === 'production' 
-            ? '/icons/LogoDark.svg' 
+            ? './assets//icons/LogoDark.svg' 
             : '/_nuxt/assets/icons/LogoDark.svg',
           media: '(prefers-color-scheme: light)',
           sizes: 'any'
@@ -45,7 +45,7 @@ export default defineNuxtConfig({
           rel: 'icon',
           type: 'image/svg+xml',
           href: process.env.NODE_ENV === 'production' 
-            ? '/icons/LogoLight.svg' 
+            ? './assets//icons/LogoLight.svg' 
             : '/_nuxt/assets/icons/LogoLight.svg',
           media: '(prefers-color-scheme: dark)',
           sizes: 'any'
