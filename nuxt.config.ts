@@ -48,20 +48,16 @@ export default defineNuxtConfig({
       ]
     }
   },
-
   nitro: {
-    static: true,
-    prerender: {
-      crawlLinks: true
-    },
-    publicAssets: [
-      {
-        dir: resolve(__dirname, 'assets/icons'),
-        baseURL: '/icons'
+    routeRules: {
+      '/icons/**': {
+        headers: {
+          'Content-Type': 'image/svg+xml',
+          'Cache-Control': 'public, max-age=31536000, immutable'
+        }
       }
-    ]
+    }
   },
-
   hooks: {
     'nitro:init'(nitro) {
       nitro.options.routeRules = {
