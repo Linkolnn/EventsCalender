@@ -31,20 +31,25 @@ export default defineNuxtConfig({
     head: {
       title: 'Zillendar',
       link: [
+        // Используем абсолютные пути для production
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          href: '/_nuxt/assets/icons/LogoDark.svg',
+          href: process.env.NODE_ENV === 'production' 
+            ? '/icons/LogoDark.svg' 
+            : '/_nuxt/assets/icons/LogoDark.svg',
           media: '(prefers-color-scheme: light)',
           sizes: 'any'
         },
         {
           rel: 'icon',
           type: 'image/svg+xml',
-          href: '/_nuxt/assets/icons/LogoLight.svg',
+          href: process.env.NODE_ENV === 'production' 
+            ? '/icons/LogoLight.svg' 
+            : '/_nuxt/assets/icons/LogoLight.svg',
           media: '(prefers-color-scheme: dark)',
           sizes: 'any'
-        },
+        }
       ]
     }
   },
