@@ -44,11 +44,6 @@ export default defineNuxtConfig({
           href: '/icons/LogoLight.svg',
           media: '(prefers-color-scheme: dark)',
           sizes: 'any'
-        },
-        {
-          rel: 'icon',
-          href: '/favicon.ico',
-          sizes: 'any'
         }
       ]
     }
