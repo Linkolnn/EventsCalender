@@ -2,7 +2,7 @@ import { resolve } from "path";
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
-  modules: ['@nuxt/icon'],
+  modules:['nuxt-svgo'],
   devtools: { enabled: true },
   alias: {
     '@components': resolve(__dirname, './components'),
@@ -15,6 +15,11 @@ export default defineNuxtConfig({
   svgo: {
     autoImportPath: "./assets/icons/",
     componentPrefix: "Icon",
+    svgoConfig: {
+      plugins: [
+        { name: 'preset-default' }
+      ]
+    }
   },
   css: ['@/const/global.sass'],
   runtimeConfig: {
@@ -22,34 +27,27 @@ export default defineNuxtConfig({
       salt: '1jkashdgo871godl71982569381o67toadg78108-98sjf98weye278'
     }
   },
-  modules: ['@nuxt/icon', 'nuxt-svgo'],
-  icon: {
-    customCollections: [
-      {
-        prefix: 'icon',
-        dir: '/public/assets/'
-      },
-    ],
-  },
   app: {
     head: {
+      title: 'Zillendar',
       link: [
         {
-            rel: 'icon',
-            type: 'image/svg+xml',
-            href: 'assets/icons/LogoDark.svg',
-            media: '(prefers-color-scheme: light)'
-          },
-          {
-            rel: 'icon',
-            type: 'image/svg+xml',
-            href: '/assets/icons/LogoLight.svg',
-            media: '(prefers-color-scheme: dark)'
-          },
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/_nuxt/assets/icons/LogoDark.svg',
+          media: '(prefers-color-scheme: light)',
+          sizes: 'any'
+        },
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/_nuxt/assets/icons/LogoLight.svg',
+          media: '(prefers-color-scheme: dark)',
+          sizes: 'any'
+        },
       ]
     }
   },
-
   fonts: {
       provider: "local",
       defaults: {
