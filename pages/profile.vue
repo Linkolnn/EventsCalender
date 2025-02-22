@@ -47,16 +47,11 @@
     <section ref="profileRef" class="profile__section section">
       <div class="profile__create-block">
         <h1>Профиль {{ currentUser.name }}</h1>
-        <div class="button-group">
-          <button class="btn font-button" @click="startCreating">Создать событие</button>
-          <button class="btn font-button" @click="$refs.vuecal.switchView('day', new Date())">Сегодня</button>
-          <button class="btn-delete btn font-button" @click="deleteAllEvent">
-            <IconTrashs class="font-text_medium" filled/>
-          </button>
-        </div>
+        <button class="btn font-button" @click="startCreating">Создать событие</button>
+        <button class="btn font-button" @click="$refs.vuecal.switchView('day', new Date())">Сегодня</button>
+        <button class="btn-delete btn font-button" @click="deleteAllEvent">Удалить все ивенты</button>
       </div>
       <vue-cal
-        ref="vuecal"
         locale="ru"
         class="calendar"
         :events="events"
@@ -248,9 +243,7 @@ onMounted(() => {
   opacity: 1
 
 .textarea
-  resize: vertical
-  min-height: 150px
-  max-height: 250px
+  min-height: 130px
 
 .profile__page
   position: relative
@@ -267,11 +260,6 @@ onMounted(() => {
   padding: 0px 20px
   gap: 10px
   margin-bottom: 10px
-
-.button-group
-  display: flex
-  flex-direction: row
-  gap: 10px
   .btn
     width: max-content
 
@@ -374,7 +362,7 @@ onMounted(() => {
   justify-content: center
 
 .calendar 
-  height: 100%
+  height: 90vh
 
 .vuecal__event
   padding: 10px 1px
@@ -424,6 +412,7 @@ onMounted(() => {
 
 .vuecal__arrow--prev
   margin-left: 20px
+  margin-right: 105px
 
 .vuecal__arrow--next
   margin-right: 20px
@@ -454,11 +443,8 @@ onMounted(() => {
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 1000;
     background: $gradient;
-
-  .calendar 
-    height: 90vh
 
   .profile__create-block
     display: flex
@@ -467,17 +453,8 @@ onMounted(() => {
     gap: 10px
     margin-bottom: 10px
     > .btn
-    .button-group
       width: 100%
-      display: flex
-      flex-wrap: wrap
-      flex-direction: row
-      gap: 10px
-      .btn:first-child 
-        flex: 1 1 100%
-      .btn 
-        flex: 1
-      .btn-delete
-        flex: 0 0 auto
 
+  .calendar
+    height: 70vh
 </style>
