@@ -373,8 +373,8 @@ onMounted(() => {
   align-items: center
   justify-content: center
 
-.calendar 
-  height: 100%
+.calendar
+  height: 90vh
 
 .vuecal__event
   padding: 10px 1px
@@ -424,7 +424,6 @@ onMounted(() => {
 
 .vuecal__arrow--prev
   margin-left: 20px
-  margin-right: 105px
 
 .vuecal__arrow--next
   margin-right: 20px
@@ -478,6 +477,4 @@ onMounted(() => {
       .btn-delete
         flex: 0 0 auto
 
-  .calendar
-    height: 90vh
 </style>
